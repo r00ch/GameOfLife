@@ -10,11 +10,13 @@ namespace GameOfLife
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public bool isAlive { get; set; }
 
-        public Cell(int xCoordinate, int yCoordinate)
+        public Cell(int xCoordinate, int yCoordinate, bool alive)
         {
             X = xCoordinate;
             Y = yCoordinate;
+            isAlive = alive;
         }
         public string ToCellString()
         {
