@@ -12,18 +12,18 @@ namespace GameOfLife
         {
             var initialCells = new List<string>()
                 {
-                "{0}x{0}",
-                "{1}x{0}",
-                "{2}x{-1}",
-                "{2}x{1}",
-                "{3}x{0}",
-                "{4}x{0}",  // Lifespan of these cycles at 15 
-                "{5}x{0}",
-                "{6}x{0}",
-                "{7}x{-1}",
-                "{7}x{1}",
-                "{8}x{0}",
-                "{9}x{0}",
+                "0x0",
+                "1x0",
+                "2x-1",
+                "2x1",
+                "3x0",
+                "4x0",  // Lifespan of these cycles at 15 
+                "5x0",
+                "6x0",
+                "7x-1",
+                "7x1",
+                "8x0",
+                "9x0",
                 };
 
             var gameOfLife = new GameOfLife();
