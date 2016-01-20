@@ -33,26 +33,29 @@ namespace GameOfLife
             }
             else
             {
-                generateDeadCells();
-                allCells.AddRange(livingCells);
-                livingCells.Clear();
-                allCells.AddRange(deadCells);
-                deadCells.Clear();
-                
-                foreach (var allCell in allCells)
-                {                  
-                    var neighbours = getAliveNeighbours(allCell);
+                for (int i = 1; i <= iteration; i++)
+                {
+                    generateDeadCells();
+                    allCells.AddRange(livingCells);
+                    livingCells.Clear();
+                    allCells.AddRange(deadCells);
+                    deadCells.Clear();
                     
-                    if (!allCell.isAlive && neighbours == 3)
+                    foreach (var allCell in allCells)
                     {
-                        livingCells.Add(new Cell(allCell.X,allCell.Y,true));           
-                    }
-                    else if (allCell.isAlive && (neighbours == 3 || neighbours == 2))
-                    {
-                        livingCells.Add(new Cell(allCell.X, allCell.Y, true));
-                    }
-                }
+                        var neighbours = getAliveNeighbours(allCell);
 
+                        if (!allCell.isAlive && neighbours == 3)
+                        {
+                            livingCells.Add(new Cell(allCell.X, allCell.Y, true));
+                        }
+                        else if (allCell.isAlive && (neighbours == 3 || neighbours == 2))
+                        {
+                            livingCells.Add(new Cell(allCell.X, allCell.Y, true));
+                        }                        
+                    }
+                    allCells.Clear();
+                }
                 foreach (var livingCell in livingCells)
                 {
                     lifeCells.Add(livingCell.ToCellString());
