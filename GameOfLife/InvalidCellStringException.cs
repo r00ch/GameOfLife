@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameOfLife
 {
+	//miło, że jest dedykowany wyjątek ;) plus dla Ciebie
     public class InvalidCellStringException : Exception
     {
         public InvalidCellStringException() { }
