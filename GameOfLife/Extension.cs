@@ -35,7 +35,7 @@ namespace GameOfLife
             || !isParsingYSuccessful)
                 throw new InvalidCellStringException("Invalid cell string.");
 
-            return new Cell(xCoordinate, yCoordinate);
+            return new Cell(xCoordinate, yCoordinate, true);
         }
     }
 }
