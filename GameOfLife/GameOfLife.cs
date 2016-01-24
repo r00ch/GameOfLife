@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameOfLife 
 {
-    class GameOfLife : IGameOfLife
+	//Tak jak pisałem w Cell.cs nazwy metod w C# piszemy zawsze dużą literą, nawet jeśli są prywatne
+    public class GameOfLife : IGameOfLife
     {
         private List<Cell> livingCells = new List<Cell>();
         private List<Cell> deadCells = new List<Cell>();
@@ -35,48 +36,58 @@ namespace GameOfLife
             {
                 for (int i = 1; i <= iteration; i++)
                 {
-                    generateDeadCells();
-                    allCells.AddRange(livingCells);
+                    GenerateDeadCells();
+                    allCells.AddRange(livingCells); //zmiana kolejności tylko dla czytelności
+					allCells.AddRange(deadCells);
                     livingCells.Clear();
-                    allCells.AddRange(deadCells);
                     deadCells.Clear();
                     
-                    foreach (var allCell in allCells)
+					//czym jest allCell? Wprowadza w błąd; allCell-> cell
+                    foreach (var cell in allCells)
                     {
-                        var neighbours = getAliveNeighbours(allCell);
+                        var neighbours = GetAliveNeighbours(cell);
 
-                        if (!allCell.isAlive && neighbours == 3)
+                        if (!cell.IsAlive && neighbours == 3)
                         {
-                            livingCells.Add(new Cell(allCell.X, allCell.Y, true));
+                            livingCells.Add(new Cell(cell.X, cell.Y, true));
                         }
-                        else if (allCell.isAlive && (neighbours == 3 || neighbours == 2))
+                        else if (cell.IsAlive && (neighbours == 3 || neighbours == 2))
                         {
-                            livingCells.Add(new Cell(allCell.X, allCell.Y, true));
+                            livingCells.Add(new Cell(cell.X, cell.Y, true));
                         }                        
                     }
                     allCells.Clear();
                 }
-                foreach (var livingCell in livingCells)
-                {
-                    lifeCells.Add(livingCell.ToCellString());
-                }
-                return lifeCells;
+				//przypominać użycie Select - transformuję jedną klasę X w inną klasę Y
+				return livingCells.Select(c => c.ToCellString()).ToList();
             }
         }
 
-        private int getAliveNeighbours(Cell allCell)
+		//zmieniłem nazwę komórki, bo mi myliła wszystko :P
+        private int GetAliveNeighbours(Cell cell)
         {
             return allCells
-                            .Where(c => c.isAlive == true)
-                            .Where(c => c.X >= allCell.X - 1
-                                     && c.X <= allCell.X + 1
-                                     && c.Y >= allCell.Y - 1
-                                     && c.Y <= allCell.Y + 1)
-                            .Where(c => c != allCell)
+							//1szy where można krócej zapisać
+                            //.Where(c => c.isAlive == true)
+							.Where(c => c.IsAlive) //zmiana z małej na dużą isAlive -> IsAlive patrz komentarz Cell.cs
+							
+							//Nie pojmuję 2giego Where'a, ale działa ;)
+                            .Where(c => c.X >= cell.X - 1
+                                     && c.X <= cell.X + 1
+                                     && c.Y >= cell.Y - 1
+                                     && c.Y <= cell.Y + 1)
+
+							//3ci warunek - jest tricki ...
+							//może działać, ale nie musi...
+							//a co gdyby argumentem była nowa komórka?
+							//domyślne porównanie REFERENCJI sprawdza czy jest to ta sama instancja
+							//a to Cię nie iteresuje, tylko czy X i Y jest ten sam
+							//proponuję przeciążyć Equals w Cell
+                            .Where(c => c != cell)
                             .Count();
         }
 
-        private void generateDeadCells()
+        private void GenerateDeadCells()
         {
             foreach (var livingCell in livingCells)
             {
