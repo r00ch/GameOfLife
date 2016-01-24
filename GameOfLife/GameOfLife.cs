@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GameOfLife 
 {
 	//Tak jak pisałem w Cell.cs nazwy metod w C# piszemy zawsze dużą literą, nawet jeśli są prywatne
-    class GameOfLife : IGameOfLife
+    public class GameOfLife : IGameOfLife
     {
         private List<Cell> livingCells = new List<Cell>();
         private List<Cell> deadCells = new List<Cell>();
